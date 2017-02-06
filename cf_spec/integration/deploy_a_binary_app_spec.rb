@@ -11,10 +11,12 @@ describe 'CF Binary Buildpack' do
     let(:app_name) { 'webrick_app' }
 
     context 'when specifying a buildpack' do
-      let(:app) { Machete.deploy_app(app_name, buildpack: 'binary-test-buildpack') }
+      let(:buildpack) { ENV.fetch('SHARED_HOST')=='true' ? 'binary_buildpack' : 'binary-test-buildpack' }
+      let(:app) { Machete.deploy_app(app_name, buildpack: buildpack) }
 
       it 'deploys successfully' do
         expect(app).to be_running
+        expect(app).to have_logged("-------> Buildpack version #{File.read('VERSION')}")
 
         browser.visit_path('/')
 
