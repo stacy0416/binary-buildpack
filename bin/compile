@@ -3,7 +3,7 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 DEPS_DIR=${4:-}
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
-export BP_DIR
+export BUILDPACK_PATH=$BP_DIR
 
 source $BP_DIR/compile-extensions/lib/common
 $BP_DIR/compile-extensions/bin/check_buildpack_version $BP_DIR $CACHE_DIR
